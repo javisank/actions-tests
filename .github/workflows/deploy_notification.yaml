@@ -1,0 +1,33 @@
+name: Deploy Notification
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    # paths:
+    #   - public/**/*
+    #   - src/**/*
+    #   - types/**/*
+    #   - .eslintrc.json
+    #   - global.d.ts
+    #   - jest.config.ts
+    #   - next-env.d.ts
+    #   - next.config.mjs
+    #   - postcss.config.js
+    #   - tailwind.config.js
+    #   - tsconfig.json
+    #   - yarn.lock
+
+jobs:
+  notification:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Print message
+      run: echo "Pull Request Title: ${{ github.event.pull_request.title }}"
